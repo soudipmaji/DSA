@@ -1,0 +1,48 @@
+Q. Write a program to convert prefix expression to infix expression.
+
+
+import java.util.Stack;
+class Main{
+static boolean isOperator(char x)
+{
+	switch(x)
+	{
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+			return true;
+	}
+	return false;
+}
+public static String convert(String str)
+{
+	Stack<String> stack = new Stack<>();
+	int l = str.length();
+	for(int i = l - 1; i >= 0; i--)
+	{
+		char c = str.charAt(i);
+		if (isOperator(c))
+		{
+			String a = stack.pop();
+			String b = stack.pop();
+			String temp = "(" + a + c + b + ")";
+			stack.push(temp);
+		}
+		else
+		{
+			stack.push(c + "");
+		}
+	}
+	return stack.pop();
+}
+public static void main(String[] args)
+{
+	String exp = "*-A/BC-/AKL";
+	System.out.println("Infix : " + convert(exp));
+}
+}
+
+
+O/P:
+Infix : ((A-(B/C))*((A/K)-L))
